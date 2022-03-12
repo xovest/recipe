@@ -11,17 +11,10 @@ function Popular() {
   }, [])
 
   const getPopular = async () => {
-    const check = localStorage.getItem('popular')
+    const api = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=chicken_breast`)
+    const data = await api.json()
 
-    if (check) {
-      setPopular(JSON.parse(check))
-    } else {
-      const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=9`)
-      const data = await api.json()
-
-      localStorage.setItem('popular', JSON.stringify(data.recipes))
-      setPopular(data.recipes)
-    }
+    setPopular(data.meals)
   }
 
   return (
@@ -35,12 +28,12 @@ function Popular() {
           drag: 'free',
           gap: '5rem',
         }}>
-          {popular.map(recipe => {
+          {popular && popular.map(meal => {
             return (
-              <SplideSlide key={recipe.id}>
+              <SplideSlide key={meal.idMeal}>
                 <Card>
-                  <p>{recipe.title}</p>
-                  <img src={recipe.image} alt={recipe.title} />
+                  <p>{meal.strMeal}</p>
+                  <img src={meal.strMealThumb} alt={meal.strMeal} />
                   <Gradient />
                 </Card>
               </SplideSlide>

@@ -3,7 +3,7 @@ import styled from "styled-components"
 import {Splide, SplideSlide} from '@splidejs/react-splide'
 import '@splidejs/splide/dist/css/splide.min.css'
 
-function Popular() {
+function Veggie() {
   const [veggie, setVeggie] = useState([])
 
   useEffect(() => {
@@ -11,23 +11,16 @@ function Popular() {
   }, [])
 
   const getVeggie = async () => {
-    const check = localStorage.getItem('veggie')
+    const api = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=tomato`)
+    const data = await api.json()
 
-    if (check) {
-      setVeggie(JSON.parse(check))
-    } else {
-      const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=9&tags=vegetarian`)
-      const data = await api.json()
-
-      localStorage.setItem('veggie', JSON.stringify(data.recipes))
-      setVeggie(data.recipes)
-    }
+    setVeggie(data.meals)
   }
 
   return (
     <>
       <Wrapper>
-        <h3>Veggie picks</h3>
+        <h3>Veggie Picks</h3>
         <Splide options={{
           perPage: 3,
           arrows: false,
@@ -35,12 +28,12 @@ function Popular() {
           drag: 'free',
           gap: '5rem',
         }}>
-          {veggie.map(recipe => {
+          {veggie && veggie.map(meal => {
             return (
-              <SplideSlide key={recipe.id}>
+              <SplideSlide key={meal.idMeal}>
                 <Card>
-                  <p>{recipe.title}</p>
-                  <img src={recipe.image} alt={recipe.title} />
+                  <p>{meal.strMeal}</p>
+                  <img src={meal.strMealThumb} alt={meal.strMeal} />
                   <Gradient />
                 </Card>
               </SplideSlide>
@@ -96,4 +89,4 @@ const Gradient = styled.div`
   background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5))
 `
 
-export default Popular
+export default Veggie
