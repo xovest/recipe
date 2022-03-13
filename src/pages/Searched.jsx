@@ -1,26 +1,24 @@
+import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
-import { motion } from 'framer-motion'
-import { Link, useParams } from 'react-router-dom'
-import { useEffect, useState } from 'react'
 
-function Cuisine() {
-  const [cuisine, setCuisine] = useState([])
+function Searched() {
+  const [searchedRecipes, setSearchedRecipes] = useState([])
   let params = useParams()
 
-  const getCuisine = async (category) => { //filter by category
+  const getSearched = async (category) => { //filter by category
     const data = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`)
     const recipes = await data.json()
-    setCuisine(recipes.meals)
-    console.log(recipes);
+    setSearchedRecipes(recipes.meals)
   }
 
   useEffect(() => {
-    getCuisine(params.type)
-  }, [params.type])
+    getSearched(params.search)
+  }, [params.search])
 
   return (
     <Grid>
-      {cuisine.map(item => {
+      {searchedRecipes.map(item => {
         return (
           <Card key={item.idMeal}>
             <img src={item.strMealThumb} alt="item.strMeal" />
@@ -28,7 +26,7 @@ function Cuisine() {
           </Card>
         )
       })}
-    </Grid>
+    </Grid>  
   )
 }
 
@@ -54,4 +52,4 @@ const Card = styled.div`
   }
 `
 
-export default Cuisine
+export default Searched
