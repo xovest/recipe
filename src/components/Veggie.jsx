@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components"
 import {Splide, SplideSlide} from '@splidejs/react-splide'
 import '@splidejs/splide/dist/css/splide.min.css'
+import { Link } from 'react-router-dom'
 
 function Veggie() {
   const [veggie, setVeggie] = useState([])
@@ -20,7 +21,7 @@ function Veggie() {
   return (
     <>
       <Wrapper>
-        <h3>Veggie Picks</h3>
+        <h3>Tomato Picks</h3>
         <Splide options={{
           perPage: 3,
           arrows: false,
@@ -32,9 +33,11 @@ function Veggie() {
             return (
               <SplideSlide key={meal.idMeal}>
                 <Card>
-                  <p>{meal.strMeal}</p>
-                  <img src={meal.strMealThumb} alt={meal.strMeal} />
-                  <Gradient />
+                  <Link to={`/recipe/${meal.idMeal}`}>
+                    <p>{meal.strMeal}</p>
+                    <img src={meal.strMealThumb} alt={meal.strMeal} />
+                    <Gradient />
+                  </Link>
                 </Card>
               </SplideSlide>
             )
