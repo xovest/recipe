@@ -1,28 +1,34 @@
-import { FaPizzaSlice, FaHamburger } from 'react-icons/fa'
-import { GiNoodles, GiChopsticks } from 'react-icons/gi'
+import { GiChickenOven, GiCow, GiCakeSlice, GiGoat } from 'react-icons/gi'
 import styled from 'styled-components'
+import { NavLink } from 'react-router-dom'
 
 function Category() {
   return (
-    <div>
-      <div>
-        <FaPizzaSlice />
-        <h4>Italian</h4>
-      </div>
-      <div>
-        <FaHamburger />
-        <h4>American</h4>
-      </div>
-      <div>
-        <GiNoodles />
-        <h4>Thai</h4>
-      </div>
-      <div>
-        <GiChopsticks />
-        <h4>Chinese</h4>
-      </div>
-    </div>
+    <List>
+      <NavLink to={'/cuisine/Chicken'}>
+        <GiChickenOven />
+        <h4>Chicken</h4>
+      </NavLink>
+      <NavLink to={'/cuisine/Dessert'}>
+        <GiCakeSlice />
+        <h4>Dessert</h4>
+      </NavLink>
+      <NavLink to={'/cuisine/Lamb'}>
+        <GiGoat />
+        <h4>Lamb</h4>
+      </NavLink>
+      <NavLink to={'/cuisine/Beef'}>
+        <GiCow />
+        <h4>Beef</h4>
+      </NavLink>
+    </List>
   )
 }
+
+const List = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0rem;
+`
 
 export default Category
